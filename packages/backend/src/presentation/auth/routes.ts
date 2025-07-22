@@ -1,18 +1,16 @@
 /*Rutas de autenticación*/
 import { Router } from "express";
+import { AuthController } from "./controller";
 
 export class AuthRoutes {
   static get routes(): Router {
     const router = Router();
+    const controller = new AuthController();
+    
     // Aquí definimos las rutas de la aplicación
 
-    router.post("/login", (req, res) => {
-      res.json({ message: "Login endpoint" });
-    });
-    
-    router.post("/register", (req, res) => {
-      res.json({ message: "Register endpoint" });
-    });
+    router.post("/login", controller.loginUser)
+    router.post("/register", controller.registerUser);
 
     return router;
   }
