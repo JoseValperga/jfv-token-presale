@@ -1,3 +1,4 @@
+import { PostgreDatabase } from "./data/potgresdb";
 import { server } from "./presentation/server";
 
 (() => {
@@ -5,5 +6,6 @@ import { server } from "./presentation/server";
 })();
 
 async function main() {
+  await PostgreDatabase.connect()
   server.start();
 }
