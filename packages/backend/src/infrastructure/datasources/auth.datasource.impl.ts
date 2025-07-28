@@ -7,10 +7,9 @@ import {
 
 export class AuthDataSourceImpl implements AuthDataSource {
   async register(registerUserDto: RegisterUserDto): Promise<UserEntity> {
-    const { username, name, email, password } = registerUserDto;
+    const { name, email, password } = registerUserDto;
     try {
       return new UserEntity(
-        username,
         name,
         email,
         password,
