@@ -1,1 +1,2 @@
-export * from './postgres-database';
+export * from "./postgres-database";
+export * from "./model/user.model";

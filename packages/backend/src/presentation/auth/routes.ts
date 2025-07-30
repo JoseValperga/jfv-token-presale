@@ -1,12 +1,12 @@
 /*Rutas de autenticación*/
 import { Router } from "express";
 import { AuthController } from "./controller";
-import { AuthDataSourceImpl, AuthRepositoryImpl } from "../../infrastructure";
+import { AuthPostgreDataSourceImpl, AuthRepositoryImpl } from "../../infrastructure";
 
 export class AuthRoutes {
   static get routes(): Router {
     const router = Router();
-    const datasource = new AuthDataSourceImpl(); // Asumiendo que AuthDataSource está implementado
+    const datasource = new AuthPostgreDataSourceImpl(); // Asumiendo que AuthDataSource está implementado
     const authRepository = new AuthRepositoryImpl(datasource); // Asumiendo que AuthRepository está implementado
     const controller = new AuthController(authRepository);
 

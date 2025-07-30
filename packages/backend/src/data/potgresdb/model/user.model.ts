@@ -1,6 +1,7 @@
 import { DataTypes, Sequelize } from "sequelize";
+import { PostgreDatabase } from "../postgres-database";
 
-export const UserModel = (sequelize: Sequelize) =>
+export const defineUserModel = (sequelize: Sequelize) =>
   sequelize.define(
     "User",
     {
@@ -65,3 +66,5 @@ export const UserModel = (sequelize: Sequelize) =>
       timestamps: true,
     }
   );
+const sequelize = PostgreDatabase.getInstance();
+export const UserModel = defineUserModel(sequelize);
