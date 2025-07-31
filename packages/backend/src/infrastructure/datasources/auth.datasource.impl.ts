@@ -22,7 +22,7 @@ export class AuthPostgreDataSourceImpl implements AuthDataSource {
     try {
       const exist = await UserModel.findOne({ where: { email } });
       if (exist) {
-        throw CustomError.badRequest("Email already exists");
+        throw CustomError.badRequest("Wrong credentials");
       }
       // Create a new user in the database
       const user = await UserModel.create({
