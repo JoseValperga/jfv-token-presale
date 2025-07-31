@@ -5,10 +5,20 @@ import {
   RegisterUserDto,
   UserEntity,
 } from "../../domain";
+import { UserMapper } from "../mappers/user.mapper";
+
+type HashFunction = (password: string) => string;
+type CompareFunction = (password: string, hashed: string) => boolean;
 
 export class AuthPostgreDataSourceImpl implements AuthDataSource {
+  constructor(
+    private readonly hashPassword: HashFunction,
+    private readonly comparePassword: CompareFunction
+  ) {}
+
   async register(registerUserDto: RegisterUserDto): Promise<UserEntity> {
     const { name, email, password, role, img, token } = registerUserDto;
+
     try {
       const exist = await UserModel.findOne({ where: { email } });
       if (exist) {
@@ -18,24 +28,13 @@ export class AuthPostgreDataSourceImpl implements AuthDataSource {
       const user = await UserModel.create({
         name,
         email,
-        password,
+        password: this.hashPassword(password),
         role,
         img,
         token,
       });
       const newUser = user.dataValues;
-
-      return new UserEntity(
-        newUser.id,
-        newUser.name,
-        newUser.email,
-        newUser.password,
-        newUser.role,
-        newUser.img,
-        newUser.token,
-        newUser.createdAt,
-        newUser.updatedAt
-      );
+      return UserMapper.userEntityFromObject(newUser);
     } catch (error) {
       console.log("Error in register method:", error);
       if (error instanceof CustomError) {
@@ -45,5 +44,6 @@ export class AuthPostgreDataSourceImpl implements AuthDataSource {
         "An error occurred while registering the user"
       );
     }
+    
   }
 }
