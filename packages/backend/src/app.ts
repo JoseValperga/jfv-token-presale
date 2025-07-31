@@ -1,4 +1,4 @@
-import { PostgreDatabase } from "./data/potgresdb";
+import { PostgreDatabase, initializePostgresModels } from "./data/potgresdb";
 import { server } from "./presentation/server";
 
 (() => {
@@ -6,6 +6,9 @@ import { server } from "./presentation/server";
 })();
 
 async function main() {
-  await PostgreDatabase.connect()
+  await PostgreDatabase.connect();
+  initializePostgresModels(); // Initialize the models
+  const sequelize = PostgreDatabase.getInstance();
+  await sequelize.sync({alter:true});
   server.start();
 }

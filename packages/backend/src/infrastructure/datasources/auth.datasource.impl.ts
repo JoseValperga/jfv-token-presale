@@ -20,7 +20,7 @@ export class AuthPostgreDataSourceImpl implements AuthDataSource {
         name,
         email,
         password,
-        //role: registerUserDto.role || ["user"], // Default role if not provided
+        role: registerUserDto.role || ["user"], // Default role if not provided
       });
       
       const prueba=await user.save();
@@ -43,8 +43,5 @@ export class AuthPostgreDataSourceImpl implements AuthDataSource {
         "An error occurred while registering the user"
       );
     }
-
-    // Here you would typically interact with a database or an external service
-    // to register the user. For now, we will just return the DTO as is.
   }
 }
