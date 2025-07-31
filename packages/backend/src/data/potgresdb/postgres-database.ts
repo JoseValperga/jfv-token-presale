@@ -1,5 +1,7 @@
 import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
+import { envs } from "../../config";
+const { POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_PORT, POSTGRES_HOST } = envs;
 
 dotenv.config();
 
@@ -11,12 +13,12 @@ export class PostgreDatabase {
   public static getInstance(): Sequelize {
     if (!PostgreDatabase.instance) {
       PostgreDatabase.instance = new Sequelize(
-        process.env.POSTGRES_DB || "",
-        process.env.POSTGRES_USER || "",
-        process.env.POSTGRES_PASSWORD || "",
+        POSTGRES_DB,
+        POSTGRES_USER,
+        POSTGRES_PASSWORD,
         {
-          host: process.env.POSTGRES_HOST || "localhost",
-          port: parseInt(process.env.POSTGRES_PORT || "5432", 10),
+          host: POSTGRES_HOST,
+          port: POSTGRES_PORT,
           dialect: "postgres",
           logging: false,
         }
