@@ -44,7 +44,7 @@ export const defineUserModel = (sequelize: Sequelize) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    roles: {
+    role: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
       defaultValue: ["USER_ROLE"],
