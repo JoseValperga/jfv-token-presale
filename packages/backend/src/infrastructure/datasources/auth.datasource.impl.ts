@@ -44,6 +44,5 @@ export class AuthPostgreDataSourceImpl implements AuthDataSource {
         "An error occurred while registering the user"
       );
     }
-    
   }
 }
