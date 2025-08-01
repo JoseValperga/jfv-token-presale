@@ -8,4 +8,6 @@ export const envs = {
   POSTGRES_PASSWORD: get("POSTGRES_PASSWORD").required().asString(),
   POSTGRES_HOST: get("POSTGRES_HOST").required().asString(),
   POSTGRES_PORT: get("POSTGRES_PORT").required().asPortNumber(),
+  JWT_SECRET: get("JWT_SECRET").default("SEED").asString(),
+  JWT_DURATION: get("JWT_DURATION").default("2h").asString(),
 };
