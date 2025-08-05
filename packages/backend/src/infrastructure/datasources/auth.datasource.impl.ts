@@ -3,6 +3,7 @@ import {
   AuthDataSource,
   CustomError,
   RegisterUserDto,
+  LoginUserDto,
   UserEntity,
 } from "../../domain";
 import { UserMapper } from "../mappers/user.mapper";
@@ -42,6 +43,36 @@ export class AuthPostgreDataSourceImpl implements AuthDataSource {
       }
       throw CustomError.internalServerError(
         "An error occurred while registering the user"
+      );
+    }
+  }
+  
+  async login(loginUserDto: LoginUserDto): Promise<UserEntity> {
+    const { email, password } = loginUserDto;
+
+    try {
+      const exist = await UserModel.findOne({ where: { email } });
+      
+      if (!exist) {
+        throw CustomError.badRequest("Wrong credentials");
+      }
+
+      const user = exist.dataValues;
+      
+      const isPasswordValid = this.comparePassword(password, user.password);
+      if (!isPasswordValid) {
+        throw CustomError.badRequest("Wrong credentials");
+      }
+
+      return UserMapper.userEntityFromObject(user);
+
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error;
+      }
+      console.log("Error in login method:", error);
+      throw CustomError.internalServerError(
+        "An error occurred while logging in the user"
       );
     }
   }

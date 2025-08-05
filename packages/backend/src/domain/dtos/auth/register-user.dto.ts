@@ -14,7 +14,17 @@ export class RegisterUserDto {
   ) {}
 
   static create(object: { [key: string]: any }): [string?, RegisterUserDto?] {
-    const { id, name, email, password, role, img, token, createdAt, updatedAt } = object;
+    const {
+      id,
+      name,
+      email,
+      password,
+      role,
+      img,
+      token,
+      createdAt,
+      updatedAt,
+    } = object;
     if (!name) return ["Missing name"];
     if (!Validators.email.test(email)) return ["Invalid email format"];
     if (!password) return ["Missing password"];

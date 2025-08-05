@@ -1,4 +1,3 @@
-import { TokenExpiredError } from "jsonwebtoken";
 import { RegisterUserDto } from "../../dtos/auth/register-user.dto";
 import { AuthRepository } from "../../repositories/auth.repository";
 import { JwtAdapter } from "../../../config";
